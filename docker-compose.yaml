@@ -1,0 +1,14 @@
+version: "2.3"
+services:
+  nnunet:
+    runtime: nvidia
+    build:
+      context: ./docker
+    volumes:
+      # assuming nnUNet datasets are saved under $HOME/data/nnunet
+      - ${HOME}/data/nnunet/nnUNet_raw:/work/nnUNet_raw
+      - ${HOME}/data/nnunet/nnUNet_preprocessed:/work/nnUNet_preprocessed
+      # assuming nnUNet trained models are saved under $HOME/data/nnunet
+      - ${HOME}/data/nnunet/nnUNet_trained_models:/work/nnUNet_trained_models
+    tty: true
+    ipc: host  # necessary to avoid torch dataloader error
